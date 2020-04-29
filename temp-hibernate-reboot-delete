@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+
+temp_hibernatemode_file='/etc/systemd/sleep.conf.d/temp-hibernate-reboot.conf'
+delete_temp_hibernatemode_file="$0"
+
+set -x
+
+if [ "$1" = "post" ] && [ "$2" = "hibernate" ]
+then
+	for f in $temp_hibernatemode_file $delete_temp_hibernatemode_file
+	do
+		if [ -e $f ]
+		then
+			rm -f $f
+		fi
+	done
+fi

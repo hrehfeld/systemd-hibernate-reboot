@@ -1,0 +1,14 @@
+#!/usr/bin/sh
+temp_hibernatemode_dir='/etc/systemd/sleep.conf.d'
+temp_hibernatemode_file='temp-hibernate-reboot.conf'
+delete_temp_hibernatemode_dir='/usr/lib/systemd/system-sleep'
+delete_temp_hibernatemode_file='temp-hibernate-reboot-delete'
+
+set -x
+install -Dm644 -o root -g root $temp_hibernatemode_file $temp_hibernatemode_dir/$temp_hibernatemode_file
+install -Dm744 -o root -g root $delete_temp_hibernatemode_file $delete_temp_hibernatemode_dir/$delete_temp_hibernatemode_file
+
+lsblk
+read -p "Are you sure you unmounted all disks that may be mounted from windows?" -n 1 -r
+
+systemctl hibernate
